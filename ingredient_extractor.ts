@@ -14,8 +14,6 @@ dotenv.config();
 
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY})
 
-function get_ingredients()
-
 interface Ingredient {
     name: string;
     amount: string;
@@ -28,9 +26,14 @@ interface Recipe {
 }
 
 const text: string = "ENTER RECIPE HERE HERE";
+/* 
+function getRecipe(recipe: Recipe, ingredient: Ingredient ) {
+    recipe = recipe;
+
+
+}
 
 async function extractRecipe(text: string): Promise <Recipe> {
-
     try 
 
 //Output 
@@ -47,4 +50,4 @@ async function extractRecipe(text: string): Promise <Recipe> {
 } catch (error) {
     console.error('Error extracting recipe:', error);
   }
-} */
+ */
