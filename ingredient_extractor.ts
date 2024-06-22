@@ -16,38 +16,66 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY})
 
 interface Ingredient {
     name: string;
-    amount: string;
+    total_amount: string;
 }
 
 interface Recipe {
     ingredients: Ingredient[];
-    name: string;
-    instructions: string;
+    title: string;
 }
 
-const text: string = "ENTER RECIPE HERE HERE";
-/* 
-function getRecipe(recipe: Recipe, ingredient: Ingredient ) {
-    recipe = recipe;
+const recipeText: string = "ENTER RECIPE HERE HERE";
 
-
-}
-
-async function extractRecipe(text: string): Promise <Recipe> {
-    try 
-
-//Output 
-    const completion = await openai.chat.completions.create({
-        messages: [{"role": "system", "content": "...."},
-            {"role": "user", "content": "..."},],
-        model: "gpt-3.5-turbo",
-      });
+async function getRecipe() {
+    const messages = [
+        { role: 'user', content: recipeText},
+        { role: 'system', content: "create a recipe object from the inputted recipe text"}
+      ];
+      const tools = [
+        {
+            type: "function",
+            function: {
+                description: "Create a recipe object",
+                parameters: {
+                    type: "object",
+                    properties: {
+                        title: {
+                            type: "string",
+                            description: "The title of the recipe"
+                        },
+                        ingredients: {
+                            type: "array",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    name: {
+                                        type: "string",
+                                        description: "Name of the ingredient"
+                                    },
+                                    total_amount: {
+                                        type: "string",
+                                        description: "Total amount of the ingredient. Either the quantity (number) or if weight per item is mentioned, the total amount of the ingredient in grams"
+                                    }
+                                },
+                                required: ["name", "total_amount"],
+                            },
+                        },
+                    },
+                    required: ["title", "ingredients"]
+                }
+            }
+        }
+    ];
     
-      console.log(completion.choices[0]);
+    // work out the error below!
+
+    const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: messages,
+        tools: tools,
+        tool_choice: "auto", // auto is default, but we'll be explicit
+      });
+      const responseMessage = response.choices[0].message;
 
 
-      
-} catch (error) {
-    console.error('Error extracting recipe:', error);
-  }
- */
+}
