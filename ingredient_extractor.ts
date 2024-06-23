@@ -9,6 +9,7 @@
 
 import dotenv from 'dotenv';
 import OpenAI from "openai";
+import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
 dotenv.config();
 
@@ -27,43 +28,63 @@ interface Recipe {
 const recipeText: string = "ENTER RECIPE HERE HERE";
 
 async function getRecipe() {
-    const messages = [
-        { role: 'user', content: recipeText},
-        { role: 'system', content: "create a recipe object from the inputted recipe text"}
-      ];
-      const tools = [
+    const messages = [{"role": 'user' as const, "content": recipeText}];
+    const tools = [
         {
-            type: "function",
-            function: {
-                description: "Create a recipe object",
+
+                description: "This is a template that you can start from to build your tool",
+                name: "new_tool",
                 parameters: {
                     type: "object",
                     properties: {
-                        title: {
-                            type: "string",
-                            description: "The title of the recipe"
-                        },
-                        ingredients: {
-                            type: "array",
+                        array_property_name: {
+                            description: "A property that returns an array of items (can be any type mentioned below, including an object)",
                             items: {
-                                type: "object",
-                                properties: {
-                                    name: {
-                                        type: "string",
-                                        description: "Name of the ingredient"
-                                    },
-                                    total_amount: {
-                                        type: "string",
-                                        description: "Total amount of the ingredient. Either the quantity (number) or if weight per item is mentioned, the total amount of the ingredient in grams"
-                                    }
-                                },
-                                required: ["name", "total_amount"],
+                                type: "string"
                             },
+                            type: "array"
                         },
+                        boolean_property_name: {
+                            description: "A property that returns a boolean",
+                            type: "boolean"
+                        },
+                        enum_property_name: {
+                            description: "A property that returns a value from a list of enums (can be any type)",
+                            enum: [
+                                "option 1",
+                                "option 2",
+                                "option 3"
+                            ],
+                            type: "string"
+                        },
+                        number_property_name: {
+                            description: "A property that returns a number",
+                            type: "number"
+                        },
+                        object_property_name: {
+                            description: "A property that returns an object",
+                            properties: {
+                                foo: {
+                                    description: "A property on the object called 'foo' that returns a string",
+                                    type: "string"
+                                },
+                                bar: {
+                                    description: "A property on the object called 'bar' that returns a number",
+                                    type: "number"
+                                }
+                            },
+                            type: "object"  // This was missing
+                        },
+                        string_property_name: {
+                            description: "A property that returns a string",
+                            type: "string"
+                        }
                     },
-                    required: ["title", "ingredients"]
+                    required: [
+                        "array_property_name",
+                        "number_property_name"
+                    ]
                 }
-            }
         }
     ];
     
@@ -71,8 +92,8 @@ async function getRecipe() {
 
     const response = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: messages,
-        tools: tools,
+        messages,
+        tools,
         tool_choice: "auto", // auto is default, but we'll be explicit
       });
       const responseMessage = response.choices[0].message;
