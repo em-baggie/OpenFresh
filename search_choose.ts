@@ -13,12 +13,16 @@ interface SearchResult {
   price: number;
   id: number;
 }
+
+const ingredient_names = 
+
 // create search function with unnecessary parameters and headers removed
 // value of filter[keyword] can be altered
 export async function searchIngredient() {
+  for (const ingredient in ingredient_names)
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const product_parameters = {
-    'filter[keyword]': 'peas',
+    'filter[keyword]': `${ingredient_name}`,
     //'include[PRODUCT_AD]': 'citrus',
     //'citrus_max_number_ads': '5',
     'page_number': '1',
@@ -59,7 +63,7 @@ export async function searchIngredient() {
 
     // create json object with products listed from search
     // el: {name: "cheese"}
-    const data = response.data.products.map((el) => {
+    const data = response.data.products.map((el: any) => {
       const newEl: SearchResult = {
         name: el.name,
         price: el.retail_price["price"],
@@ -83,8 +87,3 @@ export async function searchIngredient() {
   }
 
 searchIngredient()
-
-function chooseIngredient(data) {
-
-
-}
