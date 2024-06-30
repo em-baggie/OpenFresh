@@ -3,26 +3,25 @@
 2. Choose particular ingredient
  */
 
-// import axios for making http requests from node.js
 import axios from 'axios';
-//import path from 'path';
-//import fs from 'fs'
+
+interface Ingredient {
+  name: string;
+  total_amount: string;
+}
 
 interface SearchResult {
   name: string;
   price: number;
   id: number;
 }
-
-const ingredient_names = 
-
 // create search function with unnecessary parameters and headers removed
 // value of filter[keyword] can be altered
-export async function searchIngredient() {
-  for (const ingredient in ingredient_names)
+export async function searchIngredient(ingredients: Ingredient[]) {
+  for (const ingredient in ingredients) {
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const product_parameters = {
-    'filter[keyword]': `${ingredient_name}`,
+    'filter[keyword]': `${ingredient.name}`,
     //'include[PRODUCT_AD]': 'citrus',
     //'citrus_max_number_ads': '5',
     'page_number': '1',
@@ -32,6 +31,7 @@ export async function searchIngredient() {
     //'region': 'England',
     //'flexi_stores': '2665' 
   };
+}
 
   try {
     const response = await axios.get(url, { 
