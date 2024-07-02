@@ -1,3 +1,5 @@
+// NEEDS FIXING
+
 /* 
 1. Send browser request to search for each ingredient in sainsburys
 2. Choose particular ingredient
@@ -17,11 +19,10 @@ interface SearchResult {
 }
 // create search function with unnecessary parameters and headers removed
 // value of filter[keyword] can be altered
-export async function searchIngredient(ingredients: Ingredient[]) {
-  for (const ingredient in ingredients) {
+export async function searchIngredient() {
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const product_parameters = {
-    'filter[keyword]': `${ingredient.name}`,
+    'filter[keyword]': `sausage`,
     //'include[PRODUCT_AD]': 'citrus',
     //'citrus_max_number_ads': '5',
     'page_number': '1',
@@ -31,7 +32,6 @@ export async function searchIngredient(ingredients: Ingredient[]) {
     //'region': 'England',
     //'flexi_stores': '2665' 
   };
-}
 
   try {
     const response = await axios.get(url, { 
@@ -62,7 +62,7 @@ export async function searchIngredient(ingredients: Ingredient[]) {
         }})
 
     // create json object with products listed from search
-    // el: {name: "cheese"}
+    // need to add code to skip if newEl cannot be formed from the response data, skip to next one
     const data = response.data.products.map((el: any) => {
       const newEl: SearchResult = {
         name: el.name,

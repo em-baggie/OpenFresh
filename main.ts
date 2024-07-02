@@ -77,6 +77,8 @@ function main() {
     Set on a baking tray and put in the preheated oven for 35-40 minutes, until the top is golden and the apples feel very soft when you insert a small, sharp knife. Leave to cool for 10 minutes before serving.
     `
     getRecipe(recipeText);
+
+    
 }
 
 main()
