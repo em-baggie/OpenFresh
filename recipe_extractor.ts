@@ -22,7 +22,7 @@ interface Recipe {
     title: string;
 }
 
-export async function getRecipe(recipeText: string): Promise<Ingredient[]> {
+export async function getIngredients(recipeText: string): Promise<Ingredient[]> {
     // create function specification - openai generates function arguments that adhere to the specification
     const tools = [
         {

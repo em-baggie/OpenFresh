@@ -1,84 +1,36 @@
-import { searchIngredient } from './search_choose';
-import { getRecipe } from './recipe_extractor'
+// User should ensure they are logged into sainsbury's prior to running program
+
+import { getBasket } from './get_basket'
+import { getRecipe } from './get_recipe'
+import { getIngredients } from './recipe_extractor'
+import { searchChooseAdd } from './search_choose_add';
+
+async function main() {
+
+    // get log in parameters to include later in requests
+    try {
+        const login_params = getBasket();
+        console.log(login_params);
+    } catch(err) {
+        console.error("Issue with log in", err);
+    }
+
+    // get recipe string from file
+    const recipe_file = "./recipe.txt";
+    try {
+        const recipe = getRecipe(recipe_file);
+        console.log(recipe);
+    } catch(err) {
+        console.error("Unable to get recipe from file", err);
+    }
+
+    // get ingredients from recipe
 
 
-function main() {
+    // search, choose and add ingredients to basket
 
-    // Example recipe below
-    const recipeText = `
-    The best apple crumble
-    Orlando Murrin
-    A star rating of 4.7 out of 5.
-    445 ratings
-    Rate
-    165 comments
-    Get 5 issues for £5 when you subscribe to our magazine
-    Preparation and cooking time
-    Prep:15 mins
-    Cook:40 mins
-    Easy
-    Serves 4
-    You can't beat a traditional apple filling topped with crispy, buttery crumble - classic comfort food at its best
+    // redirect to checkout
 
-    Nutrition: Per serving
-    NutrientUnit
-    kcal
-    608
-    fat
-    24g
-    saturates
-    14g
-    carbs
-    90g
-    sugars
-    55g
-    fibre
-    5g
-    protein
-    6g
-    salt
-    0.6g
-
-    Ingredients
-    For the filling
-    575g Bramley apple (3 medium apples), peeled, cored and sliced to 1cm thick
-    2 tbsp golden caster sugar
-    For the crumble
-    175g plain flour
-    110g golden caster sugar
-    110g cold butter
-    For the topping (optional)
-    1 tbsp rolled oats
-    1 tbsp demerara sugar
-    double cream, clotted cream or custard, to serve
-    Method
-    STEP 1
-    Heat the oven to 190C/170 fan/gas 5.
-
-    STEP 2
-    Toss 575g peeled, cored and sliced Bramley apples with 2 tbsp golden caster sugar and put in a 23cm round baking dish at least 5cm deep, or a 20cm square dish. Flatten down with your hand to prevent too much crumble falling through.
-
-    STEP 3
-    Put 175g plain flour and 110g golden caster sugar in a bowl with a good pinch of salt.
-
-    STEP 4
-    Slice in 110g cold butter and rub it in with your fingertips until the mixture looks like moist breadcrumbs. Shake the bowl and any big bits will come to the surface – rub them in. Alternatively, pulse in a processor until sandy (don’t over-process).
-
-    STEP 5
-    Pour the crumb mix over the apples to form a pile in the centre, then use a fork to even out.
-
-    STEP 6
-    Gently press the surface with the back of the fork so the crumble holds together and goes crisp, then lightly drag the fork over the top for a decorative finish.
-
-    STEP 7
-    Sprinkle 1 tbsp rolled oats and 1 tbsp demerara sugar over evenly, if you wish.
-
-    STEP 8
-    Set on a baking tray and put in the preheated oven for 35-40 minutes, until the top is golden and the apples feel very soft when you insert a small, sharp knife. Leave to cool for 10 minutes before serving.
-    `
-    getRecipe(recipeText);
-
-    
 }
 
 main()
