@@ -1,9 +1,9 @@
 // User should ensure they are logged into sainsbury's prior to running program
 
-import { getBasket } from './get_basket'
-import { getRecipe } from './get_recipe'
-import { getIngredients } from './recipe_extractor'
-import { searchChooseAdd } from './search_choose_add';
+import { getBasket } from './functions/get_basket'
+import { getRecipe } from './functions/get_recipe'
+import { getIngredients } from './functions/recipe_extractor'
+import { searchChooseAdd } from './functions/search_choose_add';
 
 async function main() {
 

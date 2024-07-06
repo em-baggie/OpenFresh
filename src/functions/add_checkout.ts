@@ -4,6 +4,3 @@
 2. redirect to checkout page for user to checkout
 */
 
-export async function add_to_basket() {
-    
-}
