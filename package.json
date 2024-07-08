@@ -11,14 +11,20 @@
   "dependencies": {
     "@types/node": "^20.14.5",
     "axios": "^1.7.2",
+    "cookie-jar": "^0.3.0",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
+    "mocha": "10.6.0",
     "open": "^10.1.0",
     "openai": "^4.52.0",
     "path": "^0.12.7",
     "puppeteer-core": "^22.11.2",
+    "selenium-webdriver": "^4.22.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.15.6",
     "web-to-text": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/selenium-webdriver": "^4.1.24"
   }
 }
