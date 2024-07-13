@@ -21,7 +21,7 @@ interface chosenIngredient {
 // value of filter[keyword] can be altered
 // is this the best way of handling the error?
 
-export async function searchChoose(): Promise<chosenIngredient> {
+export async function searchChoose(): Promise<chosenIngredient | undefined> {
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const params = {
     'filter[keyword]': `cheese`,
@@ -81,7 +81,7 @@ export async function searchChoose(): Promise<chosenIngredient> {
   
     } catch (error) {
       console.error('Error searching product:', error);
-      throw(error);
+      return undefined;
     }
   }
 

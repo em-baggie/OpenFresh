@@ -1,36 +1,32 @@
 // User should ensure they are logged into sainsbury's prior to running program
 
-import { getBasket } from './functions/get_basket'
+//import { getBasket } from './functions/get_basket'
 import { getRecipe } from './functions/get_recipe'
-import { getIngredients } from './functions/recipe_extractor'
+import { getIngredients } from './functions/ingredients_extractor'
 import { searchChoose } from './functions/search_choose';
+import { login_get_cookies } from './functions/login'
 
 async function main() {
 
     // get log in parameters to include later in requests
     try {
-        const login_params = getBasket();
-        console.log(login_params);
-    } catch(err) {
-        console.error("Issue with log in", err);
-    }
+        //log in and extract cookies
+        login_get_cookies();
 
-    // get recipe string from file
-    const recipe_file = "./recipe.txt";
-    try {
+        // get recipe text
+        const recipe_file = "./recipe.txt";
         const recipe = getRecipe(recipe_file);
         console.log(recipe);
-    } catch(err) {
-        console.error("Unable to get recipe from file", err);
+
+        // get ingredients from recipe text
+
+        // search for ingredients
+
+        // add ingredients to basket and redirect to checkout
+
+    } catch(error) {
+        console.error('Error performing main function:', error);
     }
-
-    // get ingredients from recipe
-
-
-    // search, choose and add ingredients to basket
-
-    // redirect to checkout
-
-}
+} 
 
 main()
