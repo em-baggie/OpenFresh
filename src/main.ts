@@ -8,7 +8,6 @@ import { login_get_cookies } from './functions/login'
 
 async function main() {
 
-    // get log in parameters to include later in requests
     try {
         //log in and extract cookies
         login_get_cookies();

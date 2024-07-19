@@ -21,7 +21,7 @@ const ingredient = {
 info server sends back in response tab */
 export async function addCheckout(cookie: string, ingredient: chosenIngredient) {
 
-    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2';
+    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket/';
 
     const params = {
         // pick_time:
@@ -37,13 +37,17 @@ export async function addCheckout(cookie: string, ingredient: chosenIngredient) 
 
     const header = {
         //'authority': 'www.sainsburys.co.uk',
-        'method': 'GET',
+        'method': 'POST',
         //'path': 'groceries-api/gol-services/basket/v2/basket?pick_time=2024-07-07T18:27:18.270Z&store_number=2168',
         //'scheme': 'https',
         'Accept': 'application/json',
         'Accept-Encoding': 'gzip, deflate, br, zstd',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Content-Type': 'application/json'
+        //'Authorization': 'something long',
+        //'Content-Length': '75',
+        //'Content-Type': 'application/json',
+        'Cookie': 
+
     }
 
     }

@@ -1,48 +1,79 @@
-
-// Module for logging in and extracting session info - use selenium
-// Webdriver <-> chromedriver <-> browser
-
-import { Builder, By, WebDriver, Browser, until, Options } from 'selenium-webdriver';
+// Uses selenium to log into Sainsburys and extract cookies
 
 import dotenv from 'dotenv';
 dotenv.config();
 
-export async function login_get_cookies() {
+import { Builder, By, WebDriver, Browser, until, Options, Key } from 'selenium-webdriver';
 
-    try {
+export async function login_get_cookies() {
+        const email = process.env.EMAIL!;
+        const password = process.env.PASSWORD!;
+
+        if (!email || !password) {
+            throw new Error('Environment variables EMAIL and PASSWORD are not defined');
+        }
+    
         // start session
         const driver = await new Builder().forBrowser(Browser.CHROME).build();
 
+        // accept cookies function
+        async function acceptCookies() {
+            try {
+              // Check if the cookie banner is displayed and accept cookies
+              let isCookieBannerDisplayed = await driver
+                .wait(until.elementLocated(By.id("onetrust-accept-btn-handler")), 5000)
+                .catch(() => null);
+        
+              await driver.sleep(2000); // animation
+              if (isCookieBannerDisplayed) {
+                const btn = (
+                  await driver.findElements(By.id("onetrust-accept-btn-handler"))
+                )[0];
+                await driver.wait(until.elementIsVisible(btn), 5000);
+                await driver.wait(until.elementIsEnabled(btn), 5000);
+                await btn.click();
+              }
+              await driver.sleep(2000); // animation
+            } catch(error) {
+                console.error("error accepting cookies", error)
+            }
+          }
+
+        try {
         // navigate to webpage
-        await driver.get("https://account.sainsburys.co.uk/gol/login");
+        await driver.get("https://www.sainsburys.co.uk/");
 
-        // find log in elements (email/pw) and establish waiting strategy to ensure elements appeared before action taken on elements
-        const email_box = await driver.findElement(By.id("username"));
-        const password_box = await driver.findElement(By.id("password"));
-        const accept_cookies_button = await driver.findElement(By.id("onetrust-accept-btn-handler"));
+        await acceptCookies();
+        
+        const login = await driver.findElement(By.css('[data-id="loginForm"]'));
+        await login.click();
 
-        await driver.wait(until.elementIsVisible(accept_cookies_button), 5000);
-        await accept_cookies_button.click();
+        const groceryLogin = await driver.findElement(By.css('[data-testid="account-links-list-item-link"]'));
+        await groceryLogin.click();
 
-        await driver.wait(until.elementIsVisible(password_box), 5000);
-        await driver.wait(until.elementIsVisible(email_box), 5000);
+        console.log("Logging in...");
 
-        // log in
-        await email_box.sendKeys('emma.baghurst@gmail.com');
-        await password_box.sendKeys(process.env.PASSWORD!);
+        await driver.wait(
+            until.elementLocated(By.css('[data-testid="username"]')),
+            5000
+          );
+    
+        await acceptCookies();
 
-        const button = await driver.findElement(By.css('[data-testid="log-in"]'));
-        await button.click();
+        // Locate and fill in the email field
+        let emailBox = await driver.findElement(By.css('[data-testid="username"]'));
+        await emailBox.sendKeys(email);
+
+        let passwordField = await driver.findElement(By.css('[data-testid="password"]'));
+        await passwordField.sendKeys(password, Key.RETURN);
 
         // extract cookies
         const cookies = await driver.manage().getCookies();
         console.log(cookies);
-
+        
         // end session
         await driver.quit();
     } catch (error) {
         console.error('Error logging in and retrieving cookies:', error);
     }
 }
-
-login_get_cookies();
