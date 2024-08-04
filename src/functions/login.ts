@@ -67,11 +67,23 @@ export async function login_get_cookies() {
         let passwordField = await driver.findElement(By.css('[data-testid="password"]'));
         await passwordField.sendKeys(password, Key.RETURN);
 
-        await driver.sleep(5000); 
+        console.log("Email and password entered");
+
+        await driver.sleep(10000); 
         
-        // need to select by href
-        const groceries = await driver.findElement(By.css()); // TODO
+        let groceries_button = await driver.findElement(By.css('[data-testid=“desktop-nav-item-link”]'));
+        await groceries_button.click();
+
+        console.log("Groceries button selected");
+
+        await driver.sleep(5000);
+        
+        let groceries = await driver.findElement(By.xpath('//*[@id="root"]/div[2]/div[2]/div[1]/div/header/div[1]/div[2]/div/div/div/div/ul/li[1]/a/div'));
         await groceries.click();
+
+        console.log("Groceries home button selected");
+
+        await driver.sleep(5000); 
 
         // extract cookies
   
