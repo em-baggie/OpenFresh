@@ -5,6 +5,8 @@
 
 //TOD
 // need to somehow incorporate number of items
+// need to compare request made when adding to basket and cookies retreived - ensure have them all
+
 interface chosenIngredient {
     name: string;
     price: number;
@@ -46,7 +48,21 @@ export async function addCheckout(cookie: string, ingredient: chosenIngredient) 
         //'Authorization': 'something long',
         //'Content-Length': '75',
         //'Content-Type': 'application/json',
-        'Cookie': 
+        'Cookie': // TODO
+        //'Enabled-Feature-Flags': 
+        'Origin': 'https://www.sainsburys.co.uk',
+        'Priority': 'u=1, i',
+        //'Referer': 'https://www.sainsburys.co.uk/gol-ui/SearchResults/ham',
+        //'Sec-Ch-Ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"'
+        //'Sec-Ch-Ua-Mobile': '?0',
+        //'Sec-Ch-Ua-Platform': '"macOS"',
+        //'Sec-Fetch-Dest': 'empty',
+        //'Sec-Fetch-Mode': 'cors'
+        //'Sec-Fetch-Site': 'same-origin',
+        //'Traceparent': '00-e53957c9c7a494fa86194a014efc61c0-2b06b82d0f64991f-01',
+        //'Tracestate': '2092320@nr=0-1-1782819-181742266-2b06b82d0f64991f----1722702124068',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'Wcauthtoken': //TODO
 
     }
 

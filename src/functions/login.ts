@@ -67,13 +67,24 @@ export async function login_get_cookies() {
         let passwordField = await driver.findElement(By.css('[data-testid="password"]'));
         await passwordField.sendKeys(password, Key.RETURN);
 
+        await driver.sleep(5000); 
+        
+        // need to select by href
+        const groceries = await driver.findElement(By.css()); // TODO
+        await groceries.click();
+
         // extract cookies
+  
         const cookies = await driver.manage().getCookies();
         console.log(cookies);
+        for (const cookie of cookies) {
+          console.log(cookie.name)
+        }
         
         // end session
-        await driver.quit();
     } catch (error) {
         console.error('Error logging in and retrieving cookies:', error);
     }
 }
+
+login_get_cookies();
