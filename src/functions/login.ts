@@ -69,22 +69,17 @@ export async function login_get_cookies() {
 
         console.log("Email and password entered");
 
-        await driver.sleep(10000); 
+        await driver.sleep(15000); 
+
+       /*  ///////////
         
-        let groceries_button = await driver.findElement(By.css('[data-testid=“desktop-nav-item-link”]'));
+        let groceries_button = await driver.findElement(By.css('[data-test-id="desktop-nav-item-link"]'));
         await groceries_button.click();
 
-        console.log("Groceries button selected");
+          // <button data-test-id="desktop-nav-item-link" class="nav__menu-link" aria-label="Groceries">Groceries<svg alt="" title="Open groceries menu" class="nav__menu-chevron ln-c-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Arrow down</title><path d="M12 14.586L5.707 8.293a1 1 0 0 0-1.414 1.414l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 1 0-1.414-1.414L12 14.586z" fill="currentColor"></path></svg></button>
 
-        await driver.sleep(5000);
+        console.log("Groceries button selected"); */
         
-        let groceries = await driver.findElement(By.xpath('//*[@id="root"]/div[2]/div[2]/div[1]/div/header/div[1]/div[2]/div/div/div/div/ul/li[1]/a/div'));
-        await groceries.click();
-
-        console.log("Groceries home button selected");
-
-        await driver.sleep(5000); 
-
         // extract cookies
   
         const cookies = await driver.manage().getCookies();
