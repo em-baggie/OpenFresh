@@ -7,21 +7,21 @@
 
 import axios from 'axios';
 
-/* interface Ingredient {
+interface Ingredient {
   name: string;
   total_amount: string;
 }
- */
+
 interface chosenIngredient {
-  name: string;
-  price: number;
   id: string;
+  quantity: 1;
 }
 // create search function with unnecessary parameters and headers removed
 // value of filter[keyword] can be altered
 // is this the best way of handling the error?
 
-export async function searchChoose(): Promise<chosenIngredient | undefined> {
+export async function search_checkout(ingredient: Ingredient): Promise<chosenIngredient | undefined> {
+
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const params = {
     'filter[keyword]': `cheese`,
@@ -72,9 +72,10 @@ export async function searchChoose(): Promise<chosenIngredient | undefined> {
         name: el.name,
         price: el.retail_price["price"],
         id: el.product_uid,
+        quantity: 1,
       };
     });
-    //console.log(data);
+    //choose first ingredient - can change logic later
     const chosen_ingredient = data[0];
     console.log(chosen_ingredient);
     return chosen_ingredient;
@@ -84,5 +85,3 @@ export async function searchChoose(): Promise<chosenIngredient | undefined> {
       return undefined;
     }
   }
-
-  searchChoose();

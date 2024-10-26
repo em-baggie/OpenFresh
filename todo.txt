@@ -1,0 +1,3 @@
+work out what parameters of chosen ingredients need to extract for adding to basket post request, ensure got those in array of Choseningredients
+work out what cookies/auth codes needed
+work out quantities of ingredients

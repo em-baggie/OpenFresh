@@ -29,7 +29,7 @@ export async function getIngredients(recipeText: string): Promise<Ingredient[]> 
             type: "function" as const,
             function: {
                 name: "get_recipe_object",
-                description: "Create a recipe object",
+                description: "Create a recipe object. Do not include optional ingredients.",
                 parameters: {
                     type: "object",
                     properties: {
@@ -82,7 +82,6 @@ export async function getIngredients(recipeText: string): Promise<Ingredient[]> 
       });
     
     const toolCalls = response.choices[0].message.tool_calls;
-    console.log(toolCalls);
 
    // returns error if toolCalls undefined or .length >1
     if (!toolCalls || toolCalls.length !== 1) {

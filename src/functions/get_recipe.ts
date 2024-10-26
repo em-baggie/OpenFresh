@@ -12,7 +12,6 @@ export async function getRecipe(fp: string): Promise<string> {
     try {
         const data = await fs.readFile(fp);
         const recipeText = data.toString();
-        console.log(recipeText);
         return recipeText;
     }  catch(err) {
         console.error("Error reading file", err)

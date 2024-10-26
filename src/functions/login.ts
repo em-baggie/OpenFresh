@@ -1,11 +1,11 @@
 // Uses selenium to log into Sainsburys and extract cookies
 
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: '../../.env' });
 
 import { Builder, By, WebDriver, Browser, until, Options, Key } from 'selenium-webdriver';
 
-export async function login_get_cookies() {
+export async function login_get_cookies(): Promise<string | undefined>  {
         const email = process.env.EMAIL!;
         const password = process.env.PASSWORD!;
 
@@ -69,7 +69,7 @@ export async function login_get_cookies() {
 
         console.log("Email and password entered");
 
-        await driver.sleep(15000); 
+        await driver.sleep(30000); 
 
        /*  ///////////
         
@@ -83,15 +83,16 @@ export async function login_get_cookies() {
         // extract cookies
   
         const cookies = await driver.manage().getCookies();
-        console.log(cookies);
-        for (const cookie of cookies) {
-          console.log(cookie.name)
-        }
+        const cookieString = cookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
+        console.log(cookieString);
         
+        return cookieString;
+
         // end session
     } catch (error) {
         console.error('Error logging in and retrieving cookies:', error);
     }
 }
 
-login_get_cookies();
+// Remove this line to prevent immediate execution
+// login_get_cookies();
