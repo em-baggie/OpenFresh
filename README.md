@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://raw.githubusercontent.com/em-baggie/OpenFresh/main/openfresh_logo.webp" alt="openfresh logo" height="250">
+    <img src="images/openfresh_logo.webp" alt="openfresh logo" height="250">
     <br/>
     OpenFresh
 </h1>
