@@ -1,11 +1,13 @@
 // Uses selenium to log into Sainsburys and extract cookies
 
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../.env' });
-
 import { Builder, By, WebDriver, Browser, until, Options, Key } from 'selenium-webdriver';
 
-export async function login_get_cookies(): Promise<string | undefined>  {
+interface SessionData {
+   cookies: string;
+   wc_auth_token: string;
+}
+
+export async function login_get_cookies(): Promise<SessionData | undefined>  {
         const email = process.env.EMAIL!;
         const password = process.env.PASSWORD!;
 
@@ -69,30 +71,29 @@ export async function login_get_cookies(): Promise<string | undefined>  {
 
         console.log("Email and password entered");
 
-        await driver.sleep(30000); 
-
-       /*  ///////////
-        
-        let groceries_button = await driver.findElement(By.css('[data-test-id="desktop-nav-item-link"]'));
-        await groceries_button.click();
-
-          // <button data-test-id="desktop-nav-item-link" class="nav__menu-link" aria-label="Groceries">Groceries<svg alt="" title="Open groceries menu" class="nav__menu-chevron ln-c-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Arrow down</title><path d="M12 14.586L5.707 8.293a1 1 0 0 0-1.414 1.414l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 1 0-1.414-1.414L12 14.586z" fill="currentColor"></path></svg></button>
-
-        console.log("Groceries button selected"); */
-        
-        // extract cookies
+        await driver.sleep(15000); 
   
         const cookies = await driver.manage().getCookies();
         const cookieString = cookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
-        console.log(cookieString);
-        
-        return cookieString;
 
-        // end session
+        const wc_auth_token_var = "WC_AUTHENTICATION_661929614=661929614%2CwirxI8iQCOCEdpGgehRU32zU%2BdU%3D; other_cookie=example_value;";
+        const match = wc_auth_token_var.match(/WC_AUTHENTICATION_\d+=([^;]+)/);
+
+        if (match) {
+            const wc_auth_token_string = match[1];
+            console.log("Extracted Value:", wc_auth_token_string);
+            const session_data: SessionData = {
+              cookies: cookieString,
+              wc_auth_token: wc_auth_token_string
+            }
+            console.log(session_data);
+            return session_data;
+        } else {
+            throw new Error("WC_AUTH_TOKEN not found in the cookie string.");
+        }
     } catch (error) {
         console.error('Error logging in and retrieving cookies:', error);
-    }
-}
-
-// Remove this line to prevent immediate execution
-// login_get_cookies();
+      } finally {
+          await driver.quit();
+      }
+  }

@@ -18,11 +18,11 @@ async function main() {
         const recipe = await getRecipe(recipe_file);
 
         // get ingredients from recipe text
-        const ingredients = await getIngredients(recipe);
+        // const ingredients = await getIngredients(recipe);
 
-        for (const ingredient of ingredients) {
-            sear
-        }
+        // for (const ingredient of ingredients) {
+        //     sear
+        // }
 
         // search for ingredients
 
