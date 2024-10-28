@@ -1,64 +1,47 @@
-/* info send to server = payload tab
-info server sends back in response tab */
-
-
-// things we have: 
-// interface chosenIngredient {
-//     id: string;
-//     quantity: 1;
-//   }
-
-// interface SessionData {
-//     cookies: string;
-//     wc_auth_token: string;
-//  }
-
-
 import axios from 'axios';
 
 interface chosenIngredient {
     puid: string;
-    iuid: string;
-    quantity: 1;
-}
+    quantity: '1';
+  }
 
-const test_ingredient: chosenIngredient = {
-    puid: '',
-    iuid: '',
-    quantity: 1,
-}
+interface SessionData {
+    cookies: string;
+    wc_auth_token: string;
+    auth_token: string;
+ }
 
-async function addCheckout(cookie: string, chosen_ingredient: chosenIngredient) {
+async function addCheckout(session_data: SessionData) {
 
-    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket/';
+    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket';
   
     const params = {
-        // pick_time:
-        // store_number: 
-        // slot_booked:
+        pick_time: '2024-10-29T13:19:30Z',
+        store_number: '0054',
+        slot_booked: false,
     }
   
+        // example chicken thighs
     const data = {
-        'item_uid': chosen_ingredient["iuid"],
-        'product_uid': chosen_ingredient["puid"],
-        'quantity': '1'
-        //'selected_catchweight': "",
-        //'uom': ea,
+        'product_uid': '7874865',
+        'quantity': '1',
+        'selected_catchweight': '',
+        'uom': 'ea',
     }
   
     const header = {
         'authority': 'www.sainsburys.co.uk',
-        'method': 'PUT',
+        'method': 'POST',
         //'path': 'groceries-api/gol-services/basket/v2/basket?pick_time=2024-07-07T18:27:18.270Z&store_number=2168',
         'scheme': 'https',
         'Accept': 'application/json',
-        //'Accept-Encoding': 'gzip, deflate, br, zstd',
-        //'Accept-Language': 'en-US,en;q=0.9',
-        'Authorization': 'something long', //NEED TO FIND THIS!!!
+        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Authorization': `Bearer ${session_data.auth_token}`,
         //'Content-Length': '75',
         'Content-Type': 'application/json',
-        'Cookie': '', // add to this,
-        //'Enabled-Feature-Flags': 
+        'Cookie': session_data.cookies, // add to this,
+        //'Enabled-Feature-Flags':
         'Origin': 'https://www.sainsburys.co.uk',
         'Priority': 'u=1, i',
         //'Referer': 'https://www.sainsburys.co.uk/gol-ui/SearchResults/ham',
@@ -71,7 +54,7 @@ async function addCheckout(cookie: string, chosen_ingredient: chosenIngredient) 
         //'Traceparent': '00-e53957c9c7a494fa86194a014efc61c0-2b06b82d0f64991f-01',
         //'Tracestate': '2092320@nr=0-1-1782819-181742266-2b06b82d0f64991f----1722702124068',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-        'Wcauthtoken': '',// ADD THIS: 
+        'Wcauthtoken': session_data.wc_auth_token,
     }
     try {
         const response = await axios.post(url, data, { headers: header, params: params });
@@ -84,5 +67,4 @@ async function addCheckout(cookie: string, chosen_ingredient: chosenIngredient) 
   
   }
 
-  addCheckout(cookie, test);
-    
+  addCheckout(test)

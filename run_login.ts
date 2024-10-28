@@ -6,8 +6,7 @@ config();
 
 async function run() {
     try {
-        const cookies = await login_get_cookies();
-        console.log('Cookies:', cookies);
+        await login_get_cookies();
     } catch (error) {
         console.error('Error during login:', error);
     }

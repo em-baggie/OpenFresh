@@ -5,7 +5,6 @@ dotenv.config();
 
 import { getRecipe } from './functions/get_recipe'
 import { getIngredients } from './functions/ingredients_extractor'
-import { searchChoose } from './functions/search_choose';
 import { login_get_cookies } from './functions/login'
 
 async function main() {

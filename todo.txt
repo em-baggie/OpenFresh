@@ -1,9 +1,15 @@
-- add both ids to Choseningredients
-- 
-find authorization token - should be in cookies!
-work out what cookies/auth codes needed
-work out quantities of ingredients
-add headless driver
+FLOW:
+
+- log in first, retrieve cookies (DONE), auth token (NEED TO ADD), wcauth token (DONE) and save
+- search and get puid, uid, quantity of product - working, need to link to login and retrieval of cookies
+- add to basket using put request - not yet working, need auth token probably
+
+formatting
+error handling
+
+- work out quantities of ingredients
+- add headless driver
+- optimise error handling
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
