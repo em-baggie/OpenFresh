@@ -2,7 +2,7 @@ import axios from 'axios';
 
 interface chosenIngredient {
     puid: string;
-    quantity: '1';
+    quantity: 1;
   }
 
 interface SessionData {
@@ -11,29 +11,33 @@ interface SessionData {
     auth_token: string;
  }
 
-async function addCheckout(session_data: SessionData) {
+export async function add_to_basket(session_data: SessionData, chosen_ingredient: chosenIngredient) {
 
-    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket';
+const currentTime = new Date();
+const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';
+
+    const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket/item';
   
     const params = {
-        pick_time: '2024-10-29T13:19:30Z',
+        pick_time: pickTime,
         store_number: '0054',
         slot_booked: false,
     }
   
         // example chicken thighs
-    const data = {
-        'product_uid': '7874865',
-        'quantity': '1',
-        'selected_catchweight': '',
-        'uom': 'ea',
+    const data = 
+    {
+        "product_uid": chosen_ingredient.puid,
+        "quantity": 1,
+        "selected_catchweight": "",
+        "uom": "ea"
     }
   
     const header = {
-        'authority': 'www.sainsburys.co.uk',
-        'method': 'POST',
-        //'path': 'groceries-api/gol-services/basket/v2/basket?pick_time=2024-07-07T18:27:18.270Z&store_number=2168',
-        'scheme': 'https',
+        // ':authority': 'www.sainsburys.co.uk',
+        // ':method': 'POST',
+        // //'path': 'groceries-api/gol-services/basket/v2/basket?pick_time=2024-07-07T18:27:18.270Z&store_number=2168',
+        // ':scheme': 'https',
         'Accept': 'application/json',
         'Accept-Encoding': 'gzip, deflate, br, zstd',
         'Accept-Language': 'en-US,en;q=0.9',
@@ -56,6 +60,12 @@ async function addCheckout(session_data: SessionData) {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
         'Wcauthtoken': session_data.wc_auth_token,
     }
+
+    console.log('Request URL:', url);
+    console.log('Request Params:', params);
+    console.log('Request Body:', JSON.stringify(data, null, 2));
+    console.log('Request Headers:', header);
+
     try {
         const response = await axios.post(url, data, { headers: header, params: params });
         console.log('Item added to basket:', response.data);
@@ -66,5 +76,3 @@ async function addCheckout(session_data: SessionData) {
     }
   
   }
-
-  addCheckout(test)

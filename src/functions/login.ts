@@ -1,11 +1,11 @@
 // Uses selenium to log into Sainsburys and extract cookies
 
-import { Builder, By, WebDriver, Browser, until, Options, Key } from 'selenium-webdriver';
+import { Builder, By, WebDriver, Browser, until, Key } from 'selenium-webdriver';
 
 interface SessionData {
    cookies: string;
    wc_auth_token: string;
-   access_token: string;
+   auth_token: string;
 }
 
 export async function login_get_cookies(): Promise<SessionData | undefined>  {
@@ -84,30 +84,28 @@ export async function login_get_cookies(): Promise<SessionData | undefined>  {
 
    // Extract access_token from the cookie string, if available
     const accessToken = await driver.executeScript("return JSON.parse(localStorage.getItem('oidc.user:https://account.sainsburys.co.uk:gol')).access_token;");
-    const access_token = typeof accessToken === 'string' ? accessToken : ""; 
+    const auth_token = typeof accessToken === 'string' ? accessToken : ""; 
 
     if (!wc_auth_token) {
        throw new Error("WC_AUTH_TOKEN not found in the cookie string.");
    }
-   if (!access_token) {
+   if (!auth_token) {
        console.warn("Access token not found in the cookie string.");
    }
 
    const session_data: SessionData = {
        cookies: cookieString,
        wc_auth_token,
-       access_token,
+       auth_token,
    };
 
    console.log(`cookies: ${session_data.cookies}`);
    console.log(`wc auth: ${session_data.wc_auth_token}`);
-   console.log(`access: ${session_data.access_token}`);
+   console.log(`access: ${session_data.auth_token}`);
 
-   return session_data;
+  return session_data;
 
 } catch (error) {
    console.error('Error logging in and retrieving cookies:', error);
-} finally {
-   await driver.quit();
-}
+} 
 }
