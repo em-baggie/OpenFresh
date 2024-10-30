@@ -2,13 +2,13 @@
 
 import { Builder, By, WebDriver, Browser, until, Key } from 'selenium-webdriver';
 
-interface SessionData {
+export interface SessionData {
    cookies: string;
    wc_auth_token: string;
    auth_token: string;
 }
 
-export async function login_get_cookies(): Promise<SessionData | undefined>  {
+export async function Login(): Promise<SessionData | undefined>  {
   const email = process.env.EMAIL!;
   const password = process.env.PASSWORD!;
 

@@ -1,12 +1,11 @@
-// User should ensure they are logged into sainsbury's prior to running program
-
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { getRecipe } from './functions/get_recipe'
-import { getIngredients } from './functions/ingredients_extractor'
-import { login_get_cookies } from './functions/login'
-import { add_to_basket} from './functions/add_to_basket'
+import { GetRecipe } from './functions/get_recipe'
+import { ExtractIngredients, Ingredient } from './functions/extract_ingredients'
+import { Login } from './functions/login'
+import { SearchForIngredients, ChosenIngredient } from './functions/search_for_ingredients'
+import { AddToBasket } from './functions/add_to_basket'
 
 interface chosenIngredient {
     puid: string;
@@ -21,10 +20,10 @@ const test: chosenIngredient = {
 async function main() {
     try {
         // log in and extract cookies
-        const cookies = await login_get_cookies();
+        const cookies = await Login();
 
         if (cookies) {
-            add_to_basket(cookies, test);
+            AddToBasket(cookies, test);
         } else {
             console.error('Cookies are undefined. Please check the login process.');
         }

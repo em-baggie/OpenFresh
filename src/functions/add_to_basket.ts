@@ -1,9 +1,5 @@
 import axios from 'axios';
-
-interface chosenIngredient {
-    puid: string;
-    quantity: 1;
-  }
+import { ChosenIngredient } from './search_for_ingredients';
 
 interface SessionData {
     cookies: string;
@@ -11,7 +7,7 @@ interface SessionData {
     auth_token: string;
  }
 
-export async function add_to_basket(session_data: SessionData, chosen_ingredient: chosenIngredient) {
+export async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenIngredient) {
 
 const currentTime = new Date();
 const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';

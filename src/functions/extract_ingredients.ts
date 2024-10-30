@@ -11,18 +11,12 @@ const openai = new OpenAI({
 })
 
 // create ingredient interface
-interface Ingredient {
+export interface Ingredient {
     name: string;
     total_amount: string;
 }
 
-// may use this later (storing recipes function)
-interface Recipe {
-    ingredients: Ingredient[];
-    title: string;
-}
-
-export async function getIngredients(recipeText: string): Promise<Ingredient[]> {
+export async function ExtractIngredients(recipeText: string): Promise<Ingredient[]> {
     // create function specification - openai generates function arguments that adhere to the specification
     const tools = [
         {
