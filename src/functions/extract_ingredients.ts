@@ -79,9 +79,8 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
 
    // returns error if toolCalls undefined or .length >1
     if (!toolCalls || toolCalls.length !== 1) {
-        console.error("No tool calls were made or multiple calls were made to the function");
-        return [];
-    
+        throw new Error("No tool calls were made or multiple calls were made to the function");
+
     } else {
         const arg = JSON.parse(toolCalls[0].function.arguments);
         const transformIngredients = (functionArgs: any): Ingredient[] => {
@@ -96,9 +95,8 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
         return ingredients;
     }
 
-    } catch (error) {
-        console.error("An error occured during recipe extraction")
-        return [];
+    } catch (err) {
+        throw new Error(`Error extracting ingredients from recipe. Reason: ${err}`);
     }
 }
 

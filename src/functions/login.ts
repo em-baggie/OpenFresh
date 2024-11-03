@@ -102,6 +102,8 @@ export async function Login(): Promise<SessionData | undefined>  {
    console.log(`cookies: ${session_data.cookies}`);
    console.log(`wc auth: ${session_data.wc_auth_token}`);
    console.log(`access: ${session_data.auth_token}`);
+  
+  await driver.quit();
 
   return session_data;
 

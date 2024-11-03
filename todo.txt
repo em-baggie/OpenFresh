@@ -1,12 +1,11 @@
 TODO:
 
 FIX FLOW:
-1. extract recipe and ingredients
-2. log in, return session info and driver
-3. use session info to search for ingredients and obtain puids - return chosen ingredients
-4. use session info/chosen ingredients to add to cart - return success/failure
-5. Open cart for checkout
-6. Ensure webdriver has quit at the end
+- extract ingredients
+- log in, return session info
+- use session info to search for ingredients and obtain puids - return chosen ingredients
+- use session info/chosen ingredients to add to cart - return success/failure
+- Open cart for checkout
 
 - formatting
 - error handling

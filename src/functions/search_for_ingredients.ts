@@ -7,7 +7,7 @@ export interface ChosenIngredient {
   quantity: 1;
 }
 
-export async function SearchForIngredients(session_data: SessionData, ingredient: Ingredient): Promise<ChosenIngredient | undefined> {
+export async function SearchForIngredient(session_data: SessionData, ingredients: Ingredient[]): Promise<ChosenIngredient | undefined> {
 
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const params = {
@@ -66,8 +66,7 @@ export async function SearchForIngredients(session_data: SessionData, ingredient
     console.log(chosen_ingredient);
     return chosen_ingredient;
   
-    } catch (error) {
-      console.error('Error searching product:', error);
-      return undefined;
+    } catch (err) {
+      throw new Error(`Error searching product. Reason: ${err}`);
     }
   }
