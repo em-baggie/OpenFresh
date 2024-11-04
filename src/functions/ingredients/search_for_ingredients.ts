@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SessionData } from './login';
+import { SessionData } from '../auth/login';
 import { Ingredient } from './extract_ingredients'
 
 export interface ChosenIngredient {

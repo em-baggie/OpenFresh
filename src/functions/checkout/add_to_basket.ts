@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ChosenIngredient } from './search_for_ingredients';
+import { ChosenIngredient } from '../ingredients/search_for_ingredients';
 
 interface SessionData {
     cookies: string;

@@ -1,12 +1,5 @@
 TODO:
-
-FIX FLOW:
-- Open cart for checkout
-
-
-
-
 - formatting
-- error handling
 - work out quantities of ingredients
 - switch to headless driver
+- edit logging

@@ -1,17 +1,17 @@
-import { Builder, By, WebDriver, Browser, until } from 'selenium-webdriver';
-import { SessionData } from './login';
+import { Builder, Browser} from 'selenium-webdriver';
+import { SessionData } from '../auth/login';
 
 export async function OpenCheckout(session_data: SessionData): Promise<void> {
     const driver = await new Builder().forBrowser(Browser.CHROME).build();
+    console.log("Please manually login to Sainsbury's and navigate to the checkout page.");
+    await driver.sleep(5000);
 
     try {
         // Navigate to the Sainsbury's checkout page
         await driver.get("https://www.sainsburys.co.uk/gol-ui/trolley");
-
-        console.log("Checkout page opened successfully.");
         
         // Wait for user input before quitting the driver
-        console.log("Press any key to close the browser once checkout is complete.");
+        console.log("Press enter to quit the program once checkout is complete.");
         await new Promise(resolve => process.stdin.once('data', resolve)); // Wait for user to press Enter
 
     } catch (error) {

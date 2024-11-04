@@ -1,18 +1,18 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { GetRecipe } from './functions/get_recipe'
-import { ExtractIngredients, Ingredient } from './functions/extract_ingredients'
-import { Login, SessionData } from './functions/login'
-import { SearchForEachIngredient, ChosenIngredient } from './functions/search_for_ingredients'
-import { AddEachIngredientToBasket } from './functions/add_to_basket'
-import { OpenCheckout } from './functions/open_checkout';
+import { GetRecipe } from './functions/recipe/get_recipe'
+import { ExtractIngredients, Ingredient } from './functions/ingredients/extract_ingredients'
+import { Login, SessionData } from './functions/auth/login'
+import { SearchForEachIngredient, ChosenIngredient } from './functions/ingredients/search_for_ingredients'
+import { AddEachIngredientToBasket } from './functions/checkout/add_to_basket'
+import { OpenCheckout } from './functions/checkout/open_checkout';
 
 async function main() {
 
     // get recipe
     let recipe;
-    const recipeFile = "./recipe.txt"; 
+    const recipeFile = "src/functions/recipe/recipe.txt"; 
     try {
         recipe = await GetRecipe(recipeFile); 
     } catch (error) {

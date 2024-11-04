@@ -23,7 +23,7 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
             type: "function" as const,
             function: {
                 name: "get_recipe_object",
-                description: "Create a recipe object. Do not include optional ingredients. Only include ingredients that are required for the recipe. Be very concise.",
+                description: "Create a recipe object. Do not include optional ingredients. Do not duplicate ingredients. Only include ingredients that are required for the recipe. Be very concise.",
                 parameters: {
                     type: "object",
                     properties: {
@@ -38,7 +38,7 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
                                 properties: {
                                     name: {
                                         type: "string",
-                                        description: "Provide only the ingredient name. For example, use 'butter' instead of 'cold butter' or 'hot butter'."
+                                        description: "Provide only the single base ingredient name that you would need to buy it in the supermarket. Do not including any irrelevant information. For example, use 'butter' instead of 'cold butter' or 'hot butter'."
                                     },
                                     amount: {
                                         type: "string",
