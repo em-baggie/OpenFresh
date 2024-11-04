@@ -4,11 +4,45 @@
     OpenFresh
 </h1>
 <br>
-<h2 align="center">Work In Progress!</h2>
 
 An AI agent for streamlining grocery shopping. Retrieves relevant ingredients from chosen recipe and uses reverse engineering to add ingredients to the user’s Sainsbury's groceries account for the user to check prior to ordering.
 
-Tech Stack used:
+## How to Run the Program
+1. **Clone the repository**: 
+   ```
+   git clone https://github.com/yourusername/openfresh.git
+   cd openfresh
+   ```
+2. **Install dependencies**: 
+   Make sure you have Node.js installed. Then run:
+   ```
+   npm install
+   ```
+3. **Set up environment variables**: 
+   Create a `.env` file in the root directory and add your Sainsbury's account credentials:
+   ```
+   EMAIL=your_email@example.com
+   PASSWORD=your_password
+   OPENAI_API_KEY=your_openai_api_key
+
+4. Replace the example recipe in `src/functions/recipe/recipe.txt` with your own recipe.
+   
+5. **Run the program**: 
+   Execute the following command to start the program:
+   ```
+   tsx src/main.ts
+   ```
+6. **Follow the CL prompts**: 
+   The program will guide you through the process of logging in and adding ingredients to your basket.
+
+-----
+
+## Work in progress:
+- Incorporation of appropriatequantities of ingredients
+
+-----
+
+##Tech Stack used:
 - TypeScript
 - Javascript (Node.js)
 - OpenAI API
