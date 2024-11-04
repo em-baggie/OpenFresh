@@ -52,8 +52,7 @@ async function SearchForIngredient(session_data: SessionData, ingredient: Ingred
         headers: headers,
     });
 
-    // create json object with products listed from search
-    // need to add code to skip if newEl cannot be formed from the response data, skip to next one
+
     const data: ChosenIngredient[] = response.data.products.map((el: any) => {
       return {
         puid: el.product_uid,
@@ -61,9 +60,7 @@ async function SearchForIngredient(session_data: SessionData, ingredient: Ingred
         quantity: 1,
       };
     });
-    //choose first ingredient - can change logic later
     const chosen_ingredient = data[0];
-    console.log(chosen_ingredient);
     return chosen_ingredient;
   
     } catch (err) {
@@ -78,6 +75,7 @@ async function SearchForIngredient(session_data: SessionData, ingredient: Ingred
         const chosen = await SearchForIngredient(session_data, ingredient);
         chosen_ingredients.push(chosen);
       }
+      console.log("Ingredients searched.");
       return chosen_ingredients;
     } catch (err) {
       throw new Error(`Error searching ingredients. Reason: ${err}`);

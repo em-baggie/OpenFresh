@@ -9,6 +9,7 @@ export async function GetRecipe(fp: string): Promise<string> {
 
     try {
         const data = await fs.readFile(fp);
+        console.log("Recipe retrieved from file.");
         return data.toString();
     } catch (err) {
         throw new Error(`File read error: ${fp}. Reason: ${err}`);

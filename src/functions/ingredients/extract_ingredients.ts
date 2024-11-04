@@ -10,14 +10,12 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 })
 
-// create ingredient interface
 export interface Ingredient {
     name: string;
     total_amount: string;
 }
 
 export async function ExtractIngredients(recipeText: string): Promise<Ingredient[]> {
-    // create function specification - openai generates function arguments that adhere to the specification
     const tools = [
         {
             type: "function" as const,
@@ -77,7 +75,6 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
     
     const toolCalls = response.choices[0].message.tool_calls;
 
-   // returns error if toolCalls undefined or .length >1
     if (!toolCalls || toolCalls.length !== 1) {
         throw new Error("No tool calls were made or multiple calls were made to the function");
 
@@ -90,8 +87,7 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
             }));
         }
         const ingredients = transformIngredients(arg);
-        console.log("Recipe extraction completed successfully");
-        console.log(ingredients);
+        console.log("Ingredients extracted from recipe.");
         return ingredients;
     }
 

@@ -9,7 +9,6 @@ import { AddEachIngredientToBasket } from './functions/checkout/add_to_basket'
 import { OpenCheckout } from './functions/checkout/open_checkout';
 
 async function main() {
-
     // get recipe
     let recipe;
     const recipeFile = "src/functions/recipe/recipe.txt"; 
@@ -29,7 +28,7 @@ async function main() {
         return;
     }
 
-    // log in, get cookies
+    // log in and get session data
     let session_data: SessionData;
     try {
         session_data = await Login();

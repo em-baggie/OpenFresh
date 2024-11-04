@@ -1,5 +1,4 @@
 TODO:
-- formatting
 - work out quantities of ingredients
-- switch to headless driver
 - edit logging
+- readme

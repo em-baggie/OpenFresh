@@ -1,5 +1,3 @@
-// Uses selenium to log into Sainsburys and extract cookies
-
 import { Builder, By, WebDriver, Browser, until, Key } from 'selenium-webdriver';
 
 export interface SessionData {
@@ -16,18 +14,15 @@ export async function Login(): Promise<SessionData>  {
       throw new Error('Environment variables EMAIL and PASSWORD are not defined');
   }
 
-  // start session
   const driver = await new Builder().forBrowser(Browser.CHROME).build();
 
-  // accept cookies function
   async function acceptCookies() {
     try {
-      // Check if the cookie banner is displayed and accept cookies
       let isCookieBannerDisplayed = await driver
         .wait(until.elementLocated(By.id("onetrust-accept-btn-handler")), 5000)
         .catch(() => null);
 
-      await driver.sleep(2000); // animation
+      await driver.sleep(2000); 
       if (isCookieBannerDisplayed) {
         const btn = (
           await driver.findElements(By.id("onetrust-accept-btn-handler"))
@@ -36,14 +31,15 @@ export async function Login(): Promise<SessionData>  {
         await driver.wait(until.elementIsEnabled(btn), 5000);
         await btn.click();
       }
-      await driver.sleep(2000); // animation
+      await driver.sleep(2000); 
     } catch(error) {
         throw new Error(`Error accepting cookies. Reason: ${error}`);
     }
   }
 
   try {
-    // navigate to webpage
+    console.log("Beginning login process.");
+
     await driver.get("https://www.sainsburys.co.uk/");
 
     await acceptCookies();
@@ -54,8 +50,6 @@ export async function Login(): Promise<SessionData>  {
     const groceryLogin = await driver.findElement(By.css('[data-testid="account-links-list-item-link"]'));
     await groceryLogin.click();
 
-    console.log("Logging in...");
-
     await driver.wait(
         until.elementLocated(By.css('[data-testid="username"]')),
         5000
@@ -63,16 +57,15 @@ export async function Login(): Promise<SessionData>  {
 
     await acceptCookies();
 
-    // Locate and fill in the email field
+    console.log("Entering email and password.");
     let emailBox = await driver.findElement(By.css('[data-testid="username"]'));
     await emailBox.sendKeys(email);
 
     let passwordField = await driver.findElement(By.css('[data-testid="password"]'));
     await passwordField.sendKeys(password, Key.RETURN);
 
-    console.log("Email and password entered");
-
-    await driver.sleep(15000);
+    console.log("Retrieving cookies.");
+    await driver.sleep(5000);
 
     const cookies = await driver.manage().getCookies();
 
@@ -99,9 +92,7 @@ export async function Login(): Promise<SessionData>  {
         auth_token,
     };
 
-    console.log(`cookies: ${session_data.cookies}`);
-    console.log(`wc auth: ${session_data.wc_auth_token}`);
-    console.log(`access: ${session_data.auth_token}`);
+    console.log("Logged in and retrieved session data.");
   
     await driver.quit();
 

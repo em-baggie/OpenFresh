@@ -56,18 +56,11 @@ async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenI
         'Wcauthtoken': session_data.wc_auth_token,
     }
 
-    console.log('Request URL:', url);
-    console.log('Request Params:', params);
-    console.log('Request Body:', JSON.stringify(data, null, 2));
-    console.log('Request Headers:', header);
-
     try {
         const response = await axios.post(url, data, { headers: header, params: params });
-        console.log('Item added to basket:', response.data);
-        return response.data; // Return the response data
     } catch (error) {
         console.error('Error adding item to basket:', error);
-        throw new Error('Failed to add item to basket'); // Throw an error for further handling
+        throw new Error('Failed to add item to basket');
     }
   
   }
@@ -77,6 +70,7 @@ async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenI
         for (const ingredient of ingredients) {
             await AddToBasket(session_data, ingredient);
         }
+        console.log("Ingredients added to basket.");
     } catch (error) {
         throw new Error(`Error adding ingredients to basket. Reason: ${error}`);
     }
