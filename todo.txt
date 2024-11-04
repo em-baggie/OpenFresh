@@ -1,11 +1,10 @@
 TODO:
 
 FIX FLOW:
-- extract ingredients
-- log in, return session info
-- use session info to search for ingredients and obtain puids - return chosen ingredients
-- use session info/chosen ingredients to add to cart - return success/failure
 - Open cart for checkout
+
+
+
 
 - formatting
 - error handling

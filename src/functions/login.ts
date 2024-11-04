@@ -8,7 +8,7 @@ export interface SessionData {
    auth_token: string;
 }
 
-export async function Login(): Promise<SessionData | undefined>  {
+export async function Login(): Promise<SessionData>  {
   const email = process.env.EMAIL!;
   const password = process.env.PASSWORD!;
 
@@ -21,28 +21,28 @@ export async function Login(): Promise<SessionData | undefined>  {
 
   // accept cookies function
   async function acceptCookies() {
-      try {
-        // Check if the cookie banner is displayed and accept cookies
-        let isCookieBannerDisplayed = await driver
-          .wait(until.elementLocated(By.id("onetrust-accept-btn-handler")), 5000)
-          .catch(() => null);
-  
-        await driver.sleep(2000); // animation
-        if (isCookieBannerDisplayed) {
-          const btn = (
-            await driver.findElements(By.id("onetrust-accept-btn-handler"))
-          )[0];
-          await driver.wait(until.elementIsVisible(btn), 5000);
-          await driver.wait(until.elementIsEnabled(btn), 5000);
-          await btn.click();
-        }
-        await driver.sleep(2000); // animation
-      } catch(error) {
-          console.error("error accepting cookies", error)
-      }
-    }
-
     try {
+      // Check if the cookie banner is displayed and accept cookies
+      let isCookieBannerDisplayed = await driver
+        .wait(until.elementLocated(By.id("onetrust-accept-btn-handler")), 5000)
+        .catch(() => null);
+
+      await driver.sleep(2000); // animation
+      if (isCookieBannerDisplayed) {
+        const btn = (
+          await driver.findElements(By.id("onetrust-accept-btn-handler"))
+        )[0];
+        await driver.wait(until.elementIsVisible(btn), 5000);
+        await driver.wait(until.elementIsEnabled(btn), 5000);
+        await btn.click();
+      }
+      await driver.sleep(2000); // animation
+    } catch(error) {
+        throw new Error(`Error accepting cookies. Reason: ${error}`);
+    }
+  }
+
+  try {
     // navigate to webpage
     await driver.get("https://www.sainsburys.co.uk/");
 
@@ -78,36 +78,36 @@ export async function Login(): Promise<SessionData | undefined>  {
 
     const cookieString = cookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
 
-   // Extract the wc_auth_token from the cookie string
+    // Extract the wc_auth_token from the cookie string
     const wcAuthTokenMatch = cookieString.match(/WC_AUTHENTICATION_\d+=([^;]+)/);
     const wc_auth_token = wcAuthTokenMatch ? wcAuthTokenMatch[1] : "";
 
-   // Extract access_token from the cookie string, if available
+    // Extract access_token from the cookie string, if available
     const accessToken = await driver.executeScript("return JSON.parse(localStorage.getItem('oidc.user:https://account.sainsburys.co.uk:gol')).access_token;");
     const auth_token = typeof accessToken === 'string' ? accessToken : ""; 
 
     if (!wc_auth_token) {
        throw new Error("WC_AUTH_TOKEN not found in the cookie string.");
-   }
-   if (!auth_token) {
-       console.warn("Access token not found in the cookie string.");
-   }
+    }
+    if (!auth_token) {
+      throw new Error("AUTH_TOKEN not found in the cookie string.");
+    }
 
-   const session_data: SessionData = {
-       cookies: cookieString,
-       wc_auth_token,
-       auth_token,
-   };
+    const session_data: SessionData = {
+        cookies: cookieString,
+        wc_auth_token,
+        auth_token,
+    };
 
-   console.log(`cookies: ${session_data.cookies}`);
-   console.log(`wc auth: ${session_data.wc_auth_token}`);
-   console.log(`access: ${session_data.auth_token}`);
+    console.log(`cookies: ${session_data.cookies}`);
+    console.log(`wc auth: ${session_data.wc_auth_token}`);
+    console.log(`access: ${session_data.auth_token}`);
   
-  await driver.quit();
+    await driver.quit();
 
-  return session_data;
+    return session_data;
 
-} catch (error) {
-   console.error('Error logging in and retrieving cookies:', error);
-} 
+  } catch (err) {
+     throw new Error(`Error logging in and retrieving cookies. Reason: ${err}`);
+  } 
 }

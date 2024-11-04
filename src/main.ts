@@ -3,80 +3,66 @@ dotenv.config();
 
 import { GetRecipe } from './functions/get_recipe'
 import { ExtractIngredients, Ingredient } from './functions/extract_ingredients'
-import { Login } from './functions/login'
-import { SearchForIngredient, ChosenIngredient } from './functions/search_for_ingredients'
-import { AddToBasket } from './functions/add_to_basket'
-
-// example ingredient interfaces 
-// interface chosenIngredient {
-//     puid: string;
-//     quantity: 1;
-//   }
-
-// const test: chosenIngredient = {
-//     puid: '7874865',
-//     quantity: 1,
-// }
+import { Login, SessionData } from './functions/login'
+import { SearchForEachIngredient, ChosenIngredient } from './functions/search_for_ingredients'
+import { AddEachIngredientToBasket } from './functions/add_to_basket'
+import { OpenCheckout } from './functions/open_checkout';
 
 async function main() {
 
     // get recipe
     let recipe;
     const recipeFile = "./recipe.txt"; 
-    try {// Assume this file does not exist
-        recipe = await GetRecipe(recipeFile); // This may throw an error
+    try {
+        recipe = await GetRecipe(recipeFile); 
     } catch (error) {
-        console.error(`Error in main function while getting recipe from file "${recipeFile}":`, (error as Error).message);
-        return; // Exit early if an error occurs
+        console.error(`Error while getting recipe from file "${recipeFile}":`, (error as Error).message);
+        return;
     }
 
     // extract ingredients
-    let ingredients;
+    let ingredients: Ingredient[] = [];
     try {
         ingredients = await ExtractIngredients(recipe);
     } catch (error) {
         console.error('Error extracting ingredients:', (error as Error).message);
-    }
-
-    // search for ingredients
-    try {
-        for (const ingredient of ingredients) {
-            const chosen = await SearchForIngredient(ingredient);
-        }
-    
+        return;
     }
 
     // log in, get cookies
+    let session_data: SessionData;
+    try {
+        session_data = await Login();
+    } catch (error) {
+        console.error('Error logging in:', (error as Error).message);
+        return;
+    }
+
+    // search for ingredients
+    let chosen_ingredients: ChosenIngredient[] = [];
+    try {
+        chosen_ingredients = await SearchForEachIngredient(session_data,ingredients)
+    } catch (error) {
+        console.error('Error searching for ingredients:', (error as Error).message);
+        return;
+    }
 
     // add ingredients to basket
+    try {
+        await AddEachIngredientToBasket(session_data, chosen_ingredients)
+    } catch (error) {
+        console.error('Error adding ingredients to basket:', (error as Error).message);
+        return;
+    }
 
     // redirect to checkout
-
     try {
-
-        // log in and extract cookies
-        const cookies = await Login();
-
-
-
-        // get recipe
-        // const recipe_file = "./recipe.txt";
-        // const recipe = await getRecipe(recipe_file);
-
-        // get ingredients from recipe text
-        // const ingredients = await getIngredients(recipe);
-
-        // for (const ingredient of ingredients) {
-        //     sear
-        // }
-
-        // search for ingredients
-
-        // add ingredients to basket and redirect to checkout
-
-    } catch(error) {
-        console.error('Error performing main function:', error);
+        await OpenCheckout(session_data)
+    } catch (error) {
+        console.error('Error opening checkout:', (error as Error).message);
+        return;
     }
+    return;
 } 
 
 main();

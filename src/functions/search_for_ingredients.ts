@@ -7,7 +7,7 @@ export interface ChosenIngredient {
   quantity: 1;
 }
 
-export async function SearchForIngredient(session_data: SessionData, ingredients: Ingredient[]): Promise<ChosenIngredient | undefined> {
+async function SearchForIngredient(session_data: SessionData, ingredient: Ingredient): Promise<ChosenIngredient> {
 
   const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/product/v1/product';
   const params = {
@@ -68,5 +68,18 @@ export async function SearchForIngredient(session_data: SessionData, ingredients
   
     } catch (err) {
       throw new Error(`Error searching product. Reason: ${err}`);
+    }
+  }
+
+  export async function SearchForEachIngredient(session_data: SessionData, ingredients: Ingredient[]): Promise<ChosenIngredient[]> {
+    const chosen_ingredients: ChosenIngredient[] = [];
+    try {
+      for (const ingredient of ingredients) {
+        const chosen = await SearchForIngredient(session_data, ingredient);
+        chosen_ingredients.push(chosen);
+      }
+      return chosen_ingredients;
+    } catch (err) {
+      throw new Error(`Error searching ingredients. Reason: ${err}`);
     }
   }

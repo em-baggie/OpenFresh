@@ -7,10 +7,10 @@ interface SessionData {
     auth_token: string;
  }
 
-export async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenIngredient) {
+async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenIngredient) {
 
-const currentTime = new Date();
-const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';
+    const currentTime = new Date();
+    const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';
 
     const url = 'https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket/item';
   
@@ -20,11 +20,10 @@ const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';
         slot_booked: false,
     }
   
-        // example chicken thighs
     const data = 
     {
         "product_uid": chosen_ingredient.puid,
-        "quantity": 1,
+        "quantity": chosen_ingredient.quantity,
         "selected_catchweight": "",
         "uom": "ea"
     }
@@ -71,4 +70,14 @@ const pickTime = currentTime.toISOString().slice(0, 19) + 'Z';
         throw new Error('Failed to add item to basket'); // Throw an error for further handling
     }
   
+  }
+
+  export async function AddEachIngredientToBasket(session_data: SessionData, ingredients: ChosenIngredient[]) {
+    try {
+        for (const ingredient of ingredients) {
+            await AddToBasket(session_data, ingredient);
+        }
+    } catch (error) {
+        throw new Error(`Error adding ingredients to basket. Reason: ${error}`);
+    }
   }
