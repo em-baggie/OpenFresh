@@ -43,7 +43,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
 
 -----
 
-##Tech Stack used:
+## Tech Stack used:
 - TypeScript
 - Javascript (Node.js)
 - OpenAI API
