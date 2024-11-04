@@ -38,7 +38,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
 -----
 
 ## Work in progress:
-- Incorporation of appropriatequantities of ingredients
+- Incorporation of appropriate quantities of ingredients
 
 -----
 
