@@ -10,7 +10,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
 ## How to run
 1. **Clone the repository**: 
    ```
-   git clone https://github.com/yourusername/openfresh.git
+   git clone https://github.com/em-baggie/OpenFresh.git
    cd openfresh
    ```
 2. **Install dependencies**: 
