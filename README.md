@@ -14,7 +14,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
    cd openfresh
    ```
 2. **Install dependencies**: 
-   Make sure you have Node.js installed. Then run:
+   Make sure you have Node.js installed and then run:
    ```
    npm install
    ```
@@ -27,7 +27,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
 
 4. Replace the example recipe in `src/functions/recipe/recipe.txt` with your own recipe.
    
-5. **Run tn the Programhe program**: 
+5. **Run the program**: 
    Execute the following command to start the program:
    ```
    tsx src/main.ts
@@ -37,8 +37,7 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
 
 ## Work in progress:
 - Incorporation of appropriate quantities of ingredients
-- Add testing
-
+- Testing
 
 ## Tech Stack used:
 - TypeScript
