@@ -25,7 +25,8 @@ An AI agent for streamlining grocery shopping. Retrieves relevant ingredients fr
    PASSWORD=your_password
    OPENAI_API_KEY=your_openai_api_key
 
-4. Replace the example recipe in `src/functions/recipe/recipe.txt` with your own recipe.
+4. **Edit recipe**:
+   Replace the example recipe in `src/functions/recipe/recipe.txt` with your own recipe.
    
 5. **Run the program**: 
    Execute the following command to start the program:
