@@ -1,7 +1,7 @@
 <h1 align="center">
     <img src="images/openfresh_logo.webp" alt="openfresh logo" height="250">
     <br/>
-    OpenFresh: An AI agent for streamlining grocery shopping
+    🥕 OpenFresh 🥦<br>An AI agent for streamlining grocery shopping
 </h1>
 <br>
 
