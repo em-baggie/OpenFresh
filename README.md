@@ -5,7 +5,13 @@
 </h1>
 <br>
 
-An AI agent for streamlining grocery shopping. Retrieves relevant ingredients from chosen recipe and uses reverse engineering to add ingredients to the user’s Sainsbury's groceries account for the user to check prior to ordering.
+**An AI agent for streamlining grocery shopping**
+
+## Features
+- Retrieves relevant ingredients from recipe text file using <a href = "https://platform.openai.com/docs/guides/function-calling">OpenAI function calling</a>
+- Searches for these ingredients in Sainsbury's groceries API using reverse engineering of the API response
+- Adds the ingredients to the user's Sainsbury's groceries account basket
+- Directs the user to the Sainsbury's groceries website to check out and order
 
 ## How to run
 1. **Clone the repository**: 
