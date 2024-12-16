@@ -1,11 +1,9 @@
 <h1 align="center">
     <img src="images/openfresh_logo.webp" alt="openfresh logo" height="250">
     <br/>
-    OpenFresh
+    OpenFresh: An AI agent for streamlining grocery shopping
 </h1>
 <br>
-
-**An AI agent for streamlining grocery shopping**
 
 ## Features
 - Retrieves relevant ingredients from recipe text file using <a href = "https://platform.openai.com/docs/guides/function-calling">OpenAI function calling</a>
