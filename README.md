@@ -3,7 +3,6 @@
     <br>
     🥕 OpenFresh 🥦<br>An AI agent for streamlining grocery shopping
 </h1>
-<br>
 
 ## Features
 - Retrieves relevant ingredients from recipe text file using <a href = "https://platform.openai.com/docs/guides/function-calling">OpenAI function calling</a>
