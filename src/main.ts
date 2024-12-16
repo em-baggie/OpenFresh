@@ -11,7 +11,7 @@ import { OpenCheckout } from './functions/checkout/open_checkout';
 async function main() {
     // get recipe
     let recipe;
-    const recipeFile = "src/functions/recipe/recipe.txt"; 
+    const recipeFile = "src/functions/recipe/recipe1.txt"; 
     try {
         recipe = await GetRecipe(recipeFile); 
     } catch (error) {

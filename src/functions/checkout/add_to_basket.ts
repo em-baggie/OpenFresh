@@ -57,7 +57,7 @@ async function AddToBasket(session_data: SessionData, chosen_ingredient: ChosenI
     }
 
     try {
-        const response = await axios.post(url, data, { headers: header, params: params });
+        await axios.post(url, data, { headers: header, params: params });
     } catch (error) {
         console.error('Error adding item to basket:', error);
         throw new Error('Failed to add item to basket');

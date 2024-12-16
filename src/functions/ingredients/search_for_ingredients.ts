@@ -4,7 +4,7 @@ import { Ingredient } from './extract_ingredients'
 
 export interface ChosenIngredient {
   puid: string;
-  quantity: 1;
+  quantity: number;
 }
 
 async function SearchForIngredient(session_data: SessionData, ingredient: Ingredient): Promise<ChosenIngredient> {
@@ -56,11 +56,24 @@ async function SearchForIngredient(session_data: SessionData, ingredient: Ingred
     const data: ChosenIngredient[] = response.data.products.map((el: any) => {
       return {
         puid: el.product_uid,
-        iuid: el.item_uid,
-        quantity: 1,
+        // iuid: el.item_uid,
+        quantity: (el.average_weight && el.average_weight.measure) 
+            ? el.average_weight.measure === 'g' 
+                ? (ingredient.weight ? Math.round(ingredient.weight / el.average_weight.amount) : 1) 
+                : el.average_weight.measure === 'kg' 
+                    ? (ingredient.weight ? Math.round(ingredient.weight / (el.average_weight.amount * 1000)) : 1) 
+                    : 1
+            : (el.unit_price && el.unit_price.measure_amount) 
+                ? el.unit_price.measure_amount === 'g' 
+                    ? (ingredient.weight ? Math.round(ingredient.weight / el.unit_price.amount) : 1) 
+                    : el.unit_price.measure_amount === 'kg' 
+                        ? (ingredient.weight ? Math.round(ingredient.weight / (el.unit_price.amount * 1000)) : 1) 
+                        : 1
+                : 1 // Default value if neither average_weight nor unit_price exist
       };
     });
-    const chosen_ingredient = data[0];
+    console.log(data);
+    const chosen_ingredient = data[0]; // currently adds first ingredient in list by default
     return chosen_ingredient;
   
     } catch (err) {

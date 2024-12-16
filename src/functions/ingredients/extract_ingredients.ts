@@ -12,7 +12,7 @@ const openai = new OpenAI({
 
 export interface Ingredient {
     name: string;
-    total_amount: string;
+    weight: number | null;
 }
 
 export async function ExtractIngredients(recipeText: string): Promise<Ingredient[]> {
@@ -38,17 +38,17 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
                                         type: "string",
                                         description: "Provide only the single base ingredient name that you would need to buy it in the supermarket. Do not including any irrelevant information. For example, use 'butter' instead of 'cold butter' or 'hot butter'."
                                     },
-                                    amount: {
-                                        type: "string",
-                                        description: "The total weight of the ingredient (taking into account number of items and weight per item), converted to grams where possible (denote this with 'g'). If no weight is stated, ensure the weight is '0'."
+                                    weight: {
+                                        type: "number",
+                                        description: "The total weight of the ingredient (taking into account number of items and weight per item), converted to grams where possible (denote this with 'g'). If no weight is stated, ensure the weight is null."
+                                    }
                                 }
                             },
-                            required: ["name", "amount"]
+                            required: ["name", "weight"]
                         }
                     }
                 },
                 required: ["title", "ingredients"]
-                }
             }
         }
     ];
@@ -83,10 +83,11 @@ export async function ExtractIngredients(recipeText: string): Promise<Ingredient
         const transformIngredients = (functionArgs: any): Ingredient[] => {
             return functionArgs.ingredients.map((ingredient: any) => ({
                 name: ingredient.name,
-                amount: ingredient.amount, 
+                weight: ingredient.weight, 
             }));
         }
         const ingredients = transformIngredients(arg);
+        console.log(ingredients);
         console.log("Ingredients extracted from recipe.");
         return ingredients;
     }
