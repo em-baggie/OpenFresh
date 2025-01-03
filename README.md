@@ -39,10 +39,6 @@
 6. **Follow the CL prompts**: 
    The program will guide you through the process of logging in and adding ingredients to your basket.
 
-## Work in progress:
-- Incorporation of appropriate quantities of ingredients
-- Testing
-
 ## Tech Stack used:
 - TypeScript
 - Javascript (Node.js)
